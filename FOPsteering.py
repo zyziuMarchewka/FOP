@@ -51,7 +51,7 @@ class Application(tk.Frame):
             ("nE", lambda: self.rightup())
         ])
 
-        self.button_grid.add_row \
+        bg.add_row \
                 (
                 [
                     ("W", lambda: self.left()),
