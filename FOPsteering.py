@@ -107,7 +107,7 @@ class Application(tk.Frame):
 
     def leftup(self):
         x, y = t.pos()
-        t.goto(x - odc, y)
+        t.goto(x - odc, y+odc)
         x2, y2 = t.pos()
         droga = ((x, y), (x2, y2))
 
@@ -117,7 +117,7 @@ class Application(tk.Frame):
 
     def rightup(self):
         x, y = t.pos()
-        t.goto(x - odc, y)
+        t.goto(x - odc, y+odc)
         x2, y2 = t.pos()
         droga = ((x, y), (x2, y2))
 
@@ -136,7 +136,14 @@ class Application(tk.Frame):
             t.undo()
 
     def downright(self):
-        pass
+        x, y = t.pos()
+        t.goto(x+odc, y-odc)
+        x2, y2 = t.pos()
+        droga = ((x, y), (x2, y2))
+
+        f = ifin(droga, zajete)
+        if f:
+            t.undo()
 
 
 if __name__ == '__main__':
