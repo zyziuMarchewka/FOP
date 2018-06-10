@@ -52,6 +52,12 @@ class Application(tk.Frame):
 
     def quit(self):
         sys.exit()
+        self.menu_grid = tk_tools.ButtonGrid(root, 1, ["MENU"])
+        bg.add_row([
+            (),
+            ("Quit", lambda: self.quit()),
+            ()
+        ])
 
     def up(self):
         x, y = t.pos()
