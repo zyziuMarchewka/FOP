@@ -36,15 +36,19 @@ class Application(tk.Frame):
 
         bg.add_row([
                     ("W", lambda: self.left()),
-                    ("Menu", lambda: self.quit()),
+                    ("Menu", lambda: self.menu()),
                     ("E", lambda: self.right())
                   ])
 
         bg.add_row([
-                    ("W", lambda: self.left()),
-                    ("Menu", lambda: self.quit()),
-                    ("E", lambda: self.right())
+                    ("sW", lambda: self.downleft()),
+                    ("S", lambda: self.down()),
+                    ("sE", lambda: self.downright())
                   ])
+
+    def menu(self):
+        menu_grid = tk_tools.ButtonGrid(root, 1, ["MENU"])
+        menu_grid.add_row(["Quit", lambda: self.quit()])
 
     def quit(self):
         sys.exit()
@@ -61,6 +65,7 @@ class Application(tk.Frame):
 
         zajete.append(droga)
 
+
     def down(self):
         x, y = t.pos()
         t.goto(x, y - odc)
@@ -72,6 +77,7 @@ class Application(tk.Frame):
             t.undo()
 
         zajete.append(droga)
+
 
     def right(self):
         x, y = t.pos()
@@ -85,21 +91,51 @@ class Application(tk.Frame):
 
         zajete.append(droga)
 
+
     def left(self):
         x, y = t.pos()
         t.goto(x - odc, y)
         x2, y2 = t.pos()
         droga = ((x, y), (x2, y2))
+
         f = ifin(droga, zajete)
         if f:
             t.undo()
 
         zajete.append(droga)
 
+
     def leftup(self):
-        pass
+        x, y = t.pos()
+        t.goto(x - odc, y)
+        x2, y2 = t.pos()
+        droga = ((x, y), (x2, y2))
+
+        f = ifin(droga, zajete)
+        if f:
+            t.undo()
 
     def rightup(self):
+        x, y = t.pos()
+        t.goto(x - odc, y)
+        x2, y2 = t.pos()
+        droga = ((x, y), (x2, y2))
+
+        f = ifin(droga, zajete)
+        if f:
+            t.undo()
+
+    def downleft(self):
+        x, y = t.pos()
+        t.goto(x-odc, y-odc)
+        x2, y2 = t.pos()
+        droga = ((x, y), (x2, y2))
+
+        f = ifin(droga, zajete)
+        if f:
+            t.undo()
+
+    def downright(self):
         pass
 
 
