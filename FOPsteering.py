@@ -36,7 +36,7 @@ class Application(tk.Frame):
 
         bg.add_row([
                     ("W", lambda: self.left()),
-                    ("Menu", lambda: self.menu()),
+                    ("Exit", lambda: self.quit()),
                     ("E", lambda: self.right())
                   ])
 
@@ -47,8 +47,7 @@ class Application(tk.Frame):
                   ])
 
     def menu(self):
-        menu_grid = tk_tools.ButtonGrid(root, 1, ["MENU"])
-        menu_grid.add_row(["Quit", lambda: self.quit()])
+        print('Opcja "Menu" jeszcze nie gotowa.')
 
     def quit(self):
         sys.exit()
@@ -115,15 +114,19 @@ class Application(tk.Frame):
         if f:
             t.undo()
 
+        zajete.append(droga)
+
     def rightup(self):
         x, y = t.pos()
-        t.goto(x - odc, y+odc)
+        t.goto(x+odc, y+odc)
         x2, y2 = t.pos()
         droga = ((x, y), (x2, y2))
 
         f = ifin(droga, zajete)
         if f:
             t.undo()
+
+        zajete.append(droga)
 
     def downleft(self):
         x, y = t.pos()
@@ -135,6 +138,8 @@ class Application(tk.Frame):
         if f:
             t.undo()
 
+        zajete.append(droga)
+
     def downright(self):
         x, y = t.pos()
         t.goto(x+odc, y-odc)
@@ -144,6 +149,8 @@ class Application(tk.Frame):
         f = ifin(droga, zajete)
         if f:
             t.undo()
+
+        zajete.append(droga)
 
 
 if __name__ == '__main__':
