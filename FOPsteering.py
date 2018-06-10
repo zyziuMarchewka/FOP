@@ -48,6 +48,7 @@ class Application(tk.Frame):
 
     def menu(self):
         print('Opcja "Menu" jeszcze nie gotowa.')
+        #TODO: menu - opcje takie jak "exit", "restart" itp.
 
     def quit(self):
         sys.exit()
