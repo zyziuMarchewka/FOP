@@ -21,11 +21,11 @@ class Application(tk.Frame):
         super().__init__(master)
         self.create_widgets()
 
-    def create_widgets(self):
-        self.button_grid = tk_tools.ButtonGrid(root, 3,
-                                               ['Column0',
-                                                'Column1',
-                                                'Column2'])
+    def create_widgets(self, player):
+        self.button_grid = tk_tools.ButtonGrid
+        	(root, 3,
+     		['---','Player {player}','---']
+		)
         bg = self.button_grid
 
         bg.add_row([
@@ -52,12 +52,6 @@ class Application(tk.Frame):
 
     def quit(self):
         sys.exit()
-        self.menu_grid = tk_tools.ButtonGrid(root, 1, ["MENU"])
-        bg.add_row([
-            (),
-            ("Quit", lambda: self.quit()),
-            ()
-        ])
 
     def up(self):
         x, y = t.pos()
