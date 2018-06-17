@@ -9,6 +9,7 @@ t = turtle.Pen()
 
 odc = 20
 zajete = []
+Player = 1
 
 
 def ifRoutein(trasa, lista):
@@ -28,27 +29,29 @@ class Application(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
         self.create_widgets(1)
+        self.create_widgets(2)
+
     def create_widgets(self, player):
         self.button_grid = tk_tools.ButtonGrid(root, 3,
                                                [' - - -', f' P {player}', '- - - '])
         bg = self.button_grid
 
         bg.add_row([
-            ("nW", lambda: self.move(-1, 1)),
-            ("N", lambda: self. move(0, 1)),
-            ("nE", lambda: self.move(1, 1))
+            ("nW", lambda: self.move(-1, 1, player)),
+            ("N", lambda: self. move(0, 1, player)),
+            ("nE", lambda: self.move(1, 1, player))
         ])
 
         bg.add_row([
-            ("W", lambda: self.move(-1, 0)),
+            ("W", lambda: self.move(-1, 0, player)),
             ("Exit", lambda: self.quit()),
-            ("E", lambda: self.move(1, 0))
+            ("E", lambda: self.move(1, 0, player))
         ])
 
         bg.add_row([
-            ("sW", lambda: self.move(-1, -1)),
-            ("S", lambda: self.move(0, -1)),
-            ("sE", lambda: self.move(1, -1))
+            ("sW", lambda: self.move(-1, -1, player)),
+            ("S", lambda: self.move(0, -1, player)),
+            ("sE", lambda: self.move(1, -1, player))
         ])
 
     def menu(self):
@@ -63,7 +66,10 @@ class Application(tk.Frame):
         for l in list:
             l.destroy()
 
-    def move(self, x, y):
+    def move(self, x, y, player2):
+        global Player
+        if player2 != Player:
+            return
         px, py = t.pos()
         t.goto(px+ (x*odc), py + (y*odc))
         px2, py2 = t.pos()
@@ -74,12 +80,14 @@ class Application(tk.Frame):
             t.undo()
 
         zajete.append(droga)
+        f = ifin((px2, py2), zajete)
+        if f != 1:
+            Player = 3-Player
+            print(f'Turn of Player {Player}')
+
+
 
 if __name__ == '__main__':
     root = tk.Tk()
     app = Application(master=root)
     app.mainloop()
-
-
-
-tk.mainloop()
