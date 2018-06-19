@@ -1,15 +1,15 @@
-from time import sleep
 import sys
 import tkinter as tk
 import tk_tools
 import turtle
-from decimal import Decimal
 
 t = turtle.Pen()
 
 odc = 20
 zajete = []
 Player = 1
+turn = 1
+move = 1
 
 
 def ifRoutein(trasa, lista):
@@ -29,29 +29,28 @@ class Application(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
         self.create_widgets(1)
-        self.create_widgets(2)
 
     def create_widgets(self, player):
         self.button_grid = tk_tools.ButtonGrid(root, 3,
-                                               [' - - -', f' P {player}', '- - - '])
+                                               [f'T {turn}', f' P {player}', f'M {move}'])
         bg = self.button_grid
 
         bg.add_row([
-            ("nW", lambda: self.move(-1, 1, player)),
-            ("N", lambda: self. move(0, 1, player)),
-            ("nE", lambda: self.move(1, 1, player))
+            ("nW", lambda: self.move(-1, 1)),
+            ("N", lambda: self. move(0, 1)),
+            ("nE", lambda: self.move(1, 1))
         ])
 
         bg.add_row([
-            ("W", lambda: self.move(-1, 0, player)),
+            ("W", lambda: self.move(-1, 0)),
             ("Exit", lambda: self.quit()),
-            ("E", lambda: self.move(1, 0, player))
+            ("E", lambda: self.move(1, 0))
         ])
 
         bg.add_row([
-            ("sW", lambda: self.move(-1, -1, player)),
-            ("S", lambda: self.move(0, -1, player)),
-            ("sE", lambda: self.move(1, -1, player))
+            ("sW", lambda: self.move(-1, -1,)),
+            ("S", lambda: self.move(0, -1)),
+            ("sE", lambda: self.move(1, -1))
         ])
 
     def menu(self):
@@ -66,10 +65,10 @@ class Application(tk.Frame):
         for l in list:
             l.destroy()
 
-    def move(self, x, y, player2):
+    def move(self, x, y):
         global Player
-        if player2 != Player:
-            return
+        global move
+        global turn
         px, py = t.pos()
         t.goto(px+ (x*odc), py + (y*odc))
         px2, py2 = t.pos()
@@ -78,13 +77,16 @@ class Application(tk.Frame):
         f = ifRoutein(droga, zajete)
         if f:
             t.undo()
-
         zajete.append(droga)
         f = ifin((px2, py2), zajete)
         if f != 1:
             Player = 3-Player
-            print(f'Turn of Player {Player}')
-
+            # TODO: Wyraźny komunikat o nowej turze
+            turn += 1
+            move = 0
+        move += 1
+        self.clear()
+        self.create_widgets(Player)
 
 
 if __name__ == '__main__':
