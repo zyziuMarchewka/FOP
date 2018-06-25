@@ -1,15 +1,4 @@
-import sys
-import tkinter as tk
-import tk_tools
-import turtle
-
-t = turtle.Pen()
-
-odc = 20
-zajete = []
-Player = 1
-turn = 1
-move = 1
+from FOPmain import *
 
 
 def ifRoutein(trasa, lista):
@@ -53,6 +42,11 @@ class Application(tk.Frame):
             ("sE", lambda: self.move(1, -1))
         ])
 
+    def start(self):
+        global Player
+        self.clear()
+        self.create_widgets(Player)
+
     def menu(self):
         print('Opcja "Menu" jeszcze nie gotowa.')
         # TODO: menu - opcje takie jak "exit", "restart" itp.
@@ -75,21 +69,28 @@ class Application(tk.Frame):
         droga = ((px, py), (px2, py2))
 
         f = ifRoutein(droga, zajete)
+
         if f:
             t.undo()
+            move -= 1
         zajete.append(droga)
+        move += 1
+
         f = ifin((px2, py2), zajete)
         if f != 1:
             Player = 3-Player
-            # TODO: Wyraźny komunikat o nowej turze
+            self.clear()
+            self.bg = tk_tools.ButtonGrid(root, 1, [f"next turn of player {Player}"])
+            self.bg.add_row([("start", lambda: self.start())])
             turn += 1
-            move = 0
-        move += 1
-        self.clear()
-        self.create_widgets(Player)
+            move = 1
+        else:
+            self.clear()
+            self.create_widgets(Player)
 
 
 if __name__ == '__main__':
+    t.speed(1)
     root = tk.Tk()
     app = Application(master=root)
     app.mainloop()
