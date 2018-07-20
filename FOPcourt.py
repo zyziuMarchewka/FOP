@@ -59,10 +59,3 @@ def Classic(xsize, ysize):
         t.right(90)
         forw()
 
-Classic(20, 10)
-t.up()
-t.goto(0, 0)
-t.down()
-t.color("black", "black")
-t.shape("circle")
-t.turtlesize(0.25)

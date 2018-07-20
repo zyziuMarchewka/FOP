@@ -60,9 +60,11 @@ class Application(tk.Frame):
             l.destroy()
 
     def move(self, x, y):
+        # TODO: win check, "out"
         global Player
         global move
         global turn
+
         px, py = t.pos()
         t.goto(px+ (x*odc), py + (y*odc))
         px2, py2 = t.pos()
@@ -82,6 +84,12 @@ class Application(tk.Frame):
             self.clear()
             self.bg = tk_tools.ButtonGrid(root, 1, [f"next turn of player {Player}"])
             self.bg.add_row([("start", lambda: self.start())])
+            if Player == 1:
+                t.color("blue", "blue")
+                t.seth(0)
+            else:
+                t.color("green", "green")
+                t.seth(180)
             turn += 1
             move = 1
         else:
